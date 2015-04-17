@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
         
         jTable1.setModel(new InventarioTableModel(listaProductos));
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
-        jTable1.getColumnModel().getColumn(1).setCellRenderer(new ReferenciaRenderer());
+
         
         
     }
