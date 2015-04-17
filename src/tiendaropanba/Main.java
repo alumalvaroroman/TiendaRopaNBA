@@ -73,7 +73,10 @@ public class Main extends javax.swing.JFrame {
             jTextFieldPrecio.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getPrecio()));
             jTextFieldCantdDisponibles.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getCantidadesDisponibles()));
             jTextAreaDescripcion.setText(listaProductos.getListaProductos().get(indexSelectedRow).getDescripcion());
+            
         }
+        
+        
     }
 
     /**
@@ -159,11 +162,19 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setText("Ref. Producto:");
 
-        jButtonBorrar.setText("Borrar");
+        jButtonBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/borrar.png"))); // NOI18N
+        jButtonBorrar.setToolTipText("Borrar");
 
-        jButtonEditar.setText("Editar");
+        jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/editar.png"))); // NOI18N
+        jButtonEditar.setToolTipText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
-        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/nuevo.png"))); // NOI18N
+        jButtonNuevo.setToolTipText("Nuevo");
         jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNuevoActionPerformed(evt);
@@ -231,7 +242,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevo)
                     .addComponent(jButtonEditar)
-                    .addComponent(jButtonBorrar))
+                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -266,7 +277,7 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonGuardar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +299,7 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Ticket", jPanel2);
@@ -330,6 +341,16 @@ public class Main extends javax.swing.JFrame {
         listaTicket.getListaTickets().add(ticket);
         
     }//GEN-LAST:event_jButtonNuevoActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        jTextFieldNombreProducto.setEditable(true);
+        jTextFieldRefProducto.setEditable(true);
+        jTextFieldEquipo.setEditable(true);
+        jTextFieldTalla.setEditable(true);
+        jTextFieldPrecio.setEditable(true);
+        jTextFieldCantdDisponibles.setEditable(true);
+        jTextAreaDescripcion.setEditable(true);
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * @param args the command line arguments
