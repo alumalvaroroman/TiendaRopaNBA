@@ -5,6 +5,9 @@
  */
 package tiendaropanba;
 
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import tiendaropanba.renderes.PrecioRenderer;
 import tiendaropanba.renderes.ReferenciaRenderer;
 
@@ -22,6 +25,19 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        
+        // Permitir sólo una fila seleccionada
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // Añadir un detector de cambio de selección en la tabla
+        jTable1.getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent event) {
+                    mostrarDetalleProductoSeleccionado();
+                }
+            }
+        );
+             
+        
         Producto producto1;
         producto1 = new Producto("Camiseta Michael Jordan", 3124, "Chicago Bulls", "XL", "Rojo", 25.00, 12, "asfafaf");
         listaProductos.getListaProductos().add(producto1);
@@ -33,6 +49,31 @@ public class Main extends javax.swing.JFrame {
         jTable1.setModel(new InventarioTableModel(listaProductos));
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new ReferenciaRenderer());
+        
+        
+    }
+    
+    
+    
+    public void mostrarDetalleProductoSeleccionado() {
+        int indexSelectedRow = jTable1.getSelectedRow();
+        if(indexSelectedRow < 0) {
+            jTextFieldNombreProducto.setText("");
+            jTextFieldRefProducto.setText("");
+            jTextFieldEquipo.setText("");
+            jTextFieldTalla.setText("");
+            jTextFieldPrecio.setText("");
+            jTextFieldCantdDisponibles.setText("");
+            jTextAreaDescripcion.setText("");
+        } else {
+            jTextFieldNombreProducto.setText(listaProductos.getListaProductos().get(indexSelectedRow).getNombreProducto());
+            jTextFieldRefProducto.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getReferencia()));
+            jTextFieldEquipo.setText(listaProductos.getListaProductos().get(indexSelectedRow).getEquipo());
+            jTextFieldTalla.setText(listaProductos.getListaProductos().get(indexSelectedRow).getTalla());
+            jTextFieldPrecio.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getPrecio()));
+            jTextFieldCantdDisponibles.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getCantidadesDisponibles()));
+            jTextAreaDescripcion.setText(listaProductos.getListaProductos().get(indexSelectedRow).getDescripcion());
+        }
     }
 
     /**
