@@ -8,6 +8,4 @@ public class ListaTicket {
     public ArrayList<LineaTicket> getListaTickets() {
         return listaTickets;
     }
-    
-    
 }

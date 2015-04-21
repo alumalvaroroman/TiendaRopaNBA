@@ -19,7 +19,9 @@ public class Main extends javax.swing.JFrame {
 
     
     ListaProductos listaProductos = new ListaProductos();
+    ListaTicket listaTicket = new ListaTicket();
     private InventarioTableModel inventarioTableModel;
+    private TicketTableModel ticketTableModel;
     
     /**
      * Creates new form Inventario
@@ -50,6 +52,10 @@ public class Main extends javax.swing.JFrame {
         inventarioTableModel = new InventarioTableModel(listaProductos);
         jTable1.setModel(inventarioTableModel);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
+        
+        ticketTableModel = new TicketTableModel(listaTicket);
+        jTable2.setModel(inventarioTableModel);
+        jTable2.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
     }
       
     public void mostrarDetalleProductoSeleccionado() {
@@ -110,6 +116,8 @@ public class Main extends javax.swing.JFrame {
         jTextFieldNombreProducto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -292,15 +300,34 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Inventario", jPanel1);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 848, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(186, 186, 186)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ticket", jPanel2);
@@ -325,18 +352,6 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-      
-        Producto producto1;
-        producto1 = new Producto("Hola", 123, "Hola", "XL", "Rojo", 25.00, 12, "asfafaf");
-              
-        ListaProductos listaProductos = new ListaProductos();
-        listaProductos.getListaProductos().add(producto1);
-        
-        LineaTicket ticket;
-        ticket = new LineaTicket(1, producto1, 2, 30.00);
-        
-        ListaTicket listaTicket = new ListaTicket();
-        listaTicket.getListaTickets().add(ticket);
         
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
@@ -422,8 +437,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldCantdDisponibles;
     private javax.swing.JTextField jTextFieldEquipo;

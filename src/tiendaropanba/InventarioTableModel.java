@@ -57,8 +57,7 @@ public class InventarioTableModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch(columnIndex){
-            case 0:
-            case 3:
+            case 1:
                 return false;
             default:
                 return true;
