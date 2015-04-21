@@ -53,5 +53,34 @@ public class InventarioTableModel extends AbstractTableModel {
                 return null;
         }
     }  
-    
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        switch(columnIndex){
+            case 0:
+            case 3:
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Producto producto = listaProductos.getListaProductos().get(rowIndex);
+        switch(columnIndex) {
+            case 0:
+                producto.setNombreProducto(String.valueOf(aValue));
+                break;
+            case 1:
+                producto.setReferencia(Integer.valueOf((String)aValue));
+                break;
+            case 2:
+                producto.setEquipo(String.valueOf(aValue));
+                break;
+            case 3:
+                producto.setPrecio(Double.valueOf((String)aValue));
+                break;
+        }
+    }   
 }

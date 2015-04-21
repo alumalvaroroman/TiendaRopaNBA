@@ -19,6 +19,7 @@ public class Main extends javax.swing.JFrame {
 
     
     ListaProductos listaProductos = new ListaProductos();
+    private InventarioTableModel inventarioTableModel;
     
     /**
      * Creates new form Inventario
@@ -46,15 +47,11 @@ public class Main extends javax.swing.JFrame {
         producto2 = new Producto("Camiseta Kobe Bryant", 2143, "Los Angeles Lakers", "L", "Amarillo", 25.00, 5, "fagpñjgs");
         listaProductos.getListaProductos().add(producto2);
         
-        jTable1.setModel(new InventarioTableModel(listaProductos));
+        inventarioTableModel = new InventarioTableModel(listaProductos);
+        jTable1.setModel(inventarioTableModel);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
-
-        
-        
     }
-    
-    
-    
+      
     public void mostrarDetalleProductoSeleccionado() {
         int indexSelectedRow = jTable1.getSelectedRow();
         if(indexSelectedRow < 0) {
@@ -73,9 +70,7 @@ public class Main extends javax.swing.JFrame {
             jTextFieldPrecio.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getPrecio()));
             jTextFieldCantdDisponibles.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getCantidadesDisponibles()));
             jTextAreaDescripcion.setText(listaProductos.getListaProductos().get(indexSelectedRow).getDescripcion());
-            
         }
-        
         
     }
 
@@ -132,6 +127,11 @@ public class Main extends javax.swing.JFrame {
         jTextFieldTalla.setEditable(false);
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Color:");
 
@@ -239,10 +239,11 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevo)
-                    .addComponent(jButtonEditar)
-                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonNuevo)
+                        .addComponent(jButtonEditar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -324,10 +325,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-        
-        
-        
-        
+      
         Producto producto1;
         producto1 = new Producto("Hola", 123, "Hola", "XL", "Rojo", 25.00, 12, "asfafaf");
               
@@ -343,6 +341,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        jTable1.setEnabled(false);
         jTextFieldNombreProducto.setEditable(true);
         jTextFieldRefProducto.setEditable(true);
         jTextFieldEquipo.setEditable(true);
@@ -351,6 +350,22 @@ public class Main extends javax.swing.JFrame {
         jTextFieldCantdDisponibles.setEditable(true);
         jTextAreaDescripcion.setEditable(true);
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        Producto producto = listaProductos.getProducto(jTable1.getSelectedRow());
+        
+        producto.setNombreProducto(jTextFieldNombreProducto.getText());
+        producto.setReferencia(Integer.valueOf(jTextFieldRefProducto.getText()));
+        producto.setEquipo(jTextFieldEquipo.getText());
+        producto.setTalla(jTextFieldTalla.getText());
+        producto.setColor(null);
+        producto.setPrecio(Double.valueOf(jTextFieldPrecio.getText()));
+        producto.setCantidadesDisponibles(Integer.valueOf(jTextFieldCantdDisponibles.getText()));
+        producto.setDescripcion(jTextAreaDescripcion.getText());
+        
+        inventarioTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+        jTable1.setEnabled(true);
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     /**
      * @param args the command line arguments
