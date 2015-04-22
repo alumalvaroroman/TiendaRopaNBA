@@ -380,6 +380,14 @@ public class Main extends javax.swing.JFrame {
         
         inventarioTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
         jTable1.setEnabled(true);
+        
+        jTextFieldNombreProducto.setEditable(false);
+        jTextFieldRefProducto.setEditable(false);
+        jTextFieldEquipo.setEditable(false);
+        jTextFieldTalla.setEditable(false);
+        jTextFieldPrecio.setEditable(false);
+        jTextFieldCantdDisponibles.setEditable(false);
+        jTextAreaDescripcion.setEditable(false);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     /**
