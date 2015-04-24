@@ -42,35 +42,39 @@ public class Main extends javax.swing.JFrame {
              
         
         Producto producto1;
-        producto1 = new Producto("Camiseta Michael Jordan", 3124, "Chicago Bulls", "XL", "Rojo", 25.00, 12, "asfafaf");
+        producto1 = new Producto(123,"Camiseta Michael Jordan", "Chicago Bulls", "XL", "Rojo", 25.00, 50, "asfafaf");
         listaProductos.getListaProductos().add(producto1);
         
         Producto producto2;
-        producto2 = new Producto("Camiseta Kobe Bryant", 2143, "Los Angeles Lakers", "L", "Amarillo", 25.00, 5, "fagpñjgs");
+        producto2 = new Producto(145, "Camiseta Kobe Bryant", "Los Angeles Lakers", "L", "Amarillo", 25.00, 50, "fagpñjgs");
         listaProductos.getListaProductos().add(producto2);
+        
+        LineaTicket ticket1;
+        ticket1 = new LineaTicket(producto2, producto2, 1, producto2);
+        listaTicket.getListaTickets().add(ticket1);
         
         inventarioTableModel = new InventarioTableModel(listaProductos);
         jTable1.setModel(inventarioTableModel);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
         
         ticketTableModel = new TicketTableModel(listaTicket);
-        jTable2.setModel(inventarioTableModel);
+        jTable2.setModel(ticketTableModel);
         jTable2.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
     }
       
     public void mostrarDetalleProductoSeleccionado() {
         int indexSelectedRow = jTable1.getSelectedRow();
         if(indexSelectedRow < 0) {
+            jTextFieldIdProducto.setText("");
             jTextFieldNombreProducto.setText("");
-            jTextFieldRefProducto.setText("");
             jTextFieldEquipo.setText("");
             jTextFieldTalla.setText("");
             jTextFieldPrecio.setText("");
             jTextFieldCantdDisponibles.setText("");
             jTextAreaDescripcion.setText("");
         } else {
+            jTextFieldIdProducto.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getId()));
             jTextFieldNombreProducto.setText(listaProductos.getListaProductos().get(indexSelectedRow).getNombreProducto());
-            jTextFieldRefProducto.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getReferencia()));
             jTextFieldEquipo.setText(listaProductos.getListaProductos().get(indexSelectedRow).getEquipo());
             jTextFieldTalla.setText(listaProductos.getListaProductos().get(indexSelectedRow).getTalla());
             jTextFieldPrecio.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getPrecio()));
@@ -102,7 +106,7 @@ public class Main extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldEquipo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldRefProducto = new javax.swing.JTextField();
+        jTextFieldIdProducto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldCantdDisponibles = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -147,7 +151,12 @@ public class Main extends javax.swing.JFrame {
 
         jLabel4.setText("Talla:");
 
-        jTextFieldRefProducto.setEditable(false);
+        jTextFieldIdProducto.setEditable(false);
+        jTextFieldIdProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldIdProductoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Equipo:");
 
@@ -168,7 +177,7 @@ public class Main extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("Ref. Producto:");
+        jLabel2.setText("Id Producto:");
 
         jButtonBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/borrar.png"))); // NOI18N
         jButtonBorrar.setToolTipText("Borrar");
@@ -224,7 +233,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextFieldRefProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(jTextFieldIdProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                             .addComponent(jTextFieldTalla, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,21 +256,22 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonNuevo)
-                        .addComponent(jButtonEditar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar))
+                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextFieldRefProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -290,7 +300,7 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jButtonGuardar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 15, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -327,7 +337,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ticket", jPanel2);
@@ -352,13 +362,28 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        jTable1.setEnabled(false);
+        jTextFieldIdProducto.setEditable(true);
+        jTextFieldNombreProducto.setEditable(true);
+        jTextFieldEquipo.setEditable(true);
+        jTextFieldTalla.setEditable(true);
+        jTextFieldPrecio.setEditable(true);
+        jTextFieldCantdDisponibles.setEditable(true);
+        jTextAreaDescripcion.setEditable(true);
         
+        jTextFieldIdProducto.setText("");
+        jTextFieldNombreProducto.setText("");
+        jTextFieldEquipo.setText("");
+        jTextFieldTalla.setText("");
+        jTextFieldPrecio.setText("");
+        jTextFieldCantdDisponibles.setText("");
+        jTextAreaDescripcion.setText("");
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         jTable1.setEnabled(false);
+        jTextFieldIdProducto.setEditable(true);
         jTextFieldNombreProducto.setEditable(true);
-        jTextFieldRefProducto.setEditable(true);
         jTextFieldEquipo.setEditable(true);
         jTextFieldTalla.setEditable(true);
         jTextFieldPrecio.setEditable(true);
@@ -369,8 +394,8 @@ public class Main extends javax.swing.JFrame {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         Producto producto = listaProductos.getProducto(jTable1.getSelectedRow());
         
+        producto.setId(Integer.valueOf(jTextFieldIdProducto.getText()));
         producto.setNombreProducto(jTextFieldNombreProducto.getText());
-        producto.setReferencia(Integer.valueOf(jTextFieldRefProducto.getText()));
         producto.setEquipo(jTextFieldEquipo.getText());
         producto.setTalla(jTextFieldTalla.getText());
         producto.setColor(null);
@@ -381,14 +406,18 @@ public class Main extends javax.swing.JFrame {
         inventarioTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
         jTable1.setEnabled(true);
         
+        jTextFieldIdProducto.setEditable(false);
         jTextFieldNombreProducto.setEditable(false);
-        jTextFieldRefProducto.setEditable(false);
         jTextFieldEquipo.setEditable(false);
         jTextFieldTalla.setEditable(false);
         jTextFieldPrecio.setEditable(false);
         jTextFieldCantdDisponibles.setEditable(false);
         jTextAreaDescripcion.setEditable(false);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jTextFieldIdProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldIdProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,9 +481,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldCantdDisponibles;
     private javax.swing.JTextField jTextFieldEquipo;
+    private javax.swing.JTextField jTextFieldIdProducto;
     private javax.swing.JTextField jTextFieldNombreProducto;
     private javax.swing.JTextField jTextFieldPrecio;
-    private javax.swing.JTextField jTextFieldRefProducto;
     private javax.swing.JTextField jTextFieldTalla;
     // End of variables declaration//GEN-END:variables
 }

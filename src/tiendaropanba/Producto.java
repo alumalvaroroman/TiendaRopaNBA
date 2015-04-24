@@ -2,7 +2,7 @@ package tiendaropanba;
 
 public class Producto {
     private String nombreProducto;
-    private int referencia;
+    private int id;
     private String equipo;
     private String talla;
     private String color;
@@ -13,9 +13,9 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombreProducto, int referencia, String equipo, String talla, String color, double precio, int cantidadesDisponibles, String descripcion) {
+    public Producto(int id, String nombreProducto, String equipo, String talla, String color, double precio, int cantidadesDisponibles, String descripcion) {
+        this.id = id;
         this.nombreProducto = nombreProducto;
-        this.referencia = referencia;
         this.equipo = equipo;
         this.talla = talla;
         this.color = color;
@@ -32,12 +32,12 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
-    public int getReferencia() {
-        return referencia;
+    public int getId() {
+        return id;
     }
 
-    public void setReferencia(int referencia) {
-        this.referencia = referencia;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEquipo() {

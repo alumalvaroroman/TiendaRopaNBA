@@ -1,26 +1,26 @@
 package tiendaropanba;
 
 public class LineaTicket {
-   private int id;
+   private Producto id;
    private Producto producto;
    private int cantidad;
-   private double precio;
+   private Producto precio;
 
    public LineaTicket() {
    }
 
-    public LineaTicket(int id, Producto producto, int cantidad, double precio) {
+    public LineaTicket(Producto id, Producto producto, int cantidad, Producto precio) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
         this.precio = precio;
     }
 
-    public int getId() {
+    public Producto getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Producto id) {
         this.id = id;
     }
 
@@ -40,14 +40,13 @@ public class LineaTicket {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
+    public Producto getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Producto precio) {
         this.precio = precio;
     }
-   
-   
+  
    
 }

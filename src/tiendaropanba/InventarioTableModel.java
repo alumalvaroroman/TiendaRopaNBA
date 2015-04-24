@@ -26,9 +26,9 @@ public class InventarioTableModel extends AbstractTableModel {
         Producto producto = listaProductos.getListaProductos().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return producto.getNombreProducto();
+                return producto.getId();
             case 1:
-                return producto.getReferencia();
+                return producto.getNombreProducto();
             case 2:
                 return producto.getEquipo();
             case 3:
@@ -42,9 +42,9 @@ public class InventarioTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch(column) {
             case 0:
-                return "Nombre de producto";
+                return "Id";
             case 1:
-                return "Ref";
+                return "Nombre de producto";
             case 2:
                 return "Equipo";
             case 3:
@@ -69,10 +69,10 @@ public class InventarioTableModel extends AbstractTableModel {
         Producto producto = listaProductos.getListaProductos().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                producto.setNombreProducto(String.valueOf(aValue));
+                producto.setId(Integer.valueOf((String)aValue));
                 break;
             case 1:
-                producto.setReferencia(Integer.valueOf((String)aValue));
+                producto.setNombreProducto(String.valueOf(aValue));
                 break;
             case 2:
                 producto.setEquipo(String.valueOf(aValue));
