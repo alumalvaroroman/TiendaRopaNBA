@@ -5,11 +5,14 @@
  */
 package tiendaropanba;
 
+import java.math.BigDecimal;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import tiendaropanba.renderes.PrecioRenderer;
-import tiendaropanba.renderes.ReferenciaRenderer;
 
 /**
  *
@@ -22,7 +25,9 @@ public class Main extends javax.swing.JFrame {
     ListaTicket listaTicket = new ListaTicket();
     private InventarioTableModel inventarioTableModel;
     private TicketTableModel ticketTableModel;
-    
+    private static EntityManager entityManager;
+    private Query consultaProductos;
+
     /**
      * Creates new form Inventario
      */
@@ -41,25 +46,21 @@ public class Main extends javax.swing.JFrame {
         );
              
         
-        Producto producto1;
-        producto1 = new Producto(123,"Camiseta Michael Jordan", "Chicago Bulls", "XL", "Rojo", 25.00, 50, "asfafaf");
-        listaProductos.getListaProductos().add(producto1);
+        entityManager = Persistence.createEntityManagerFactory("TiendaRopaNbaPU").createEntityManager();
+        consultaProductos = entityManager.createNamedQuery("Producto.findAll");
+        listaProductos.setListaProductos(consultaProductos.getResultList());
         
-        Producto producto2;
-        producto2 = new Producto(145, "Camiseta Kobe Bryant", "Los Angeles Lakers", "L", "Amarillo", 25.00, 50, "fagpñjgs");
-        listaProductos.getListaProductos().add(producto2);
-        
-        LineaTicket ticket1;
-        ticket1 = new LineaTicket(producto2, producto2, 1, producto2);
-        listaTicket.getListaTickets().add(ticket1);
+//        LineaTicket ticket1;
+//        ticket1 = new LineaTicket(producto2, producto2, 1, producto2);
+//        listaTicket.getListaTickets().add(ticket1);
         
         inventarioTableModel = new InventarioTableModel(listaProductos);
         jTable1.setModel(inventarioTableModel);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
         
-        ticketTableModel = new TicketTableModel(listaTicket);
-        jTable2.setModel(ticketTableModel);
-        jTable2.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
+//        ticketTableModel = new TicketTableModel(listaTicket);
+//        jTable2.setModel(ticketTableModel);
+//        jTable2.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
     }
       
     public void mostrarDetalleProductoSeleccionado() {
@@ -67,15 +68,15 @@ public class Main extends javax.swing.JFrame {
         if(indexSelectedRow < 0) {
             jTextFieldIdProducto.setText("");
             jTextFieldNombreProducto.setText("");
-            jTextFieldEquipo.setText("");
+            jTextFieldMarca.setText("");
             jTextFieldTalla.setText("");
             jTextFieldPrecio.setText("");
             jTextFieldCantdDisponibles.setText("");
             jTextAreaDescripcion.setText("");
         } else {
-            jTextFieldIdProducto.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getId()));
+            jTextFieldIdProducto.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getIdProducto()));
             jTextFieldNombreProducto.setText(listaProductos.getListaProductos().get(indexSelectedRow).getNombreProducto());
-            jTextFieldEquipo.setText(listaProductos.getListaProductos().get(indexSelectedRow).getEquipo());
+            jTextFieldMarca.setText(listaProductos.getListaProductos().get(indexSelectedRow).getMarca());
             jTextFieldTalla.setText(listaProductos.getListaProductos().get(indexSelectedRow).getTalla());
             jTextFieldPrecio.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getPrecio()));
             jTextFieldCantdDisponibles.setText(String.valueOf(listaProductos.getListaProductos().get(indexSelectedRow).getCantidadesDisponibles()));
@@ -104,7 +105,7 @@ public class Main extends javax.swing.JFrame {
         jTextFieldTalla = new javax.swing.JTextField();
         jButtonGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldEquipo = new javax.swing.JTextField();
+        jTextFieldMarca = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldIdProducto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -147,7 +148,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel5.setText("Color:");
 
-        jTextFieldEquipo.setEditable(false);
+        jTextFieldMarca.setEditable(false);
 
         jLabel4.setText("Talla:");
 
@@ -158,7 +159,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Equipo:");
+        jLabel3.setText("Marca:");
 
         jTextFieldCantdDisponibles.setEditable(false);
 
@@ -237,7 +238,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jTextFieldTalla, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEquipo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldMarca, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldNombreProducto)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +276,7 @@ public class Main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextFieldEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -365,7 +366,7 @@ public class Main extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         jTextFieldIdProducto.setEditable(true);
         jTextFieldNombreProducto.setEditable(true);
-        jTextFieldEquipo.setEditable(true);
+        jTextFieldMarca.setEditable(true);
         jTextFieldTalla.setEditable(true);
         jTextFieldPrecio.setEditable(true);
         jTextFieldCantdDisponibles.setEditable(true);
@@ -373,7 +374,7 @@ public class Main extends javax.swing.JFrame {
         
         jTextFieldIdProducto.setText("");
         jTextFieldNombreProducto.setText("");
-        jTextFieldEquipo.setText("");
+        jTextFieldMarca.setText("");
         jTextFieldTalla.setText("");
         jTextFieldPrecio.setText("");
         jTextFieldCantdDisponibles.setText("");
@@ -384,7 +385,7 @@ public class Main extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         jTextFieldIdProducto.setEditable(true);
         jTextFieldNombreProducto.setEditable(true);
-        jTextFieldEquipo.setEditable(true);
+        jTextFieldMarca.setEditable(true);
         jTextFieldTalla.setEditable(true);
         jTextFieldPrecio.setEditable(true);
         jTextFieldCantdDisponibles.setEditable(true);
@@ -394,12 +395,12 @@ public class Main extends javax.swing.JFrame {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         Producto producto = listaProductos.getProducto(jTable1.getSelectedRow());
         
-        producto.setId(Integer.valueOf(jTextFieldIdProducto.getText()));
+        producto.setIdProducto(Integer.valueOf(jTextFieldIdProducto.getText()));
         producto.setNombreProducto(jTextFieldNombreProducto.getText());
-        producto.setEquipo(jTextFieldEquipo.getText());
+        producto.setMarca(jTextFieldMarca.getText());
         producto.setTalla(jTextFieldTalla.getText());
         producto.setColor(null);
-        producto.setPrecio(Double.valueOf(jTextFieldPrecio.getText()));
+        producto.setPrecio(BigDecimal.valueOf(Double.valueOf(jTextFieldPrecio.getText())));
         producto.setCantidadesDisponibles(Integer.valueOf(jTextFieldCantdDisponibles.getText()));
         producto.setDescripcion(jTextAreaDescripcion.getText());
         
@@ -408,7 +409,7 @@ public class Main extends javax.swing.JFrame {
         
         jTextFieldIdProducto.setEditable(false);
         jTextFieldNombreProducto.setEditable(false);
-        jTextFieldEquipo.setEditable(false);
+        jTextFieldMarca.setEditable(false);
         jTextFieldTalla.setEditable(false);
         jTextFieldPrecio.setEditable(false);
         jTextFieldCantdDisponibles.setEditable(false);
@@ -480,8 +481,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldCantdDisponibles;
-    private javax.swing.JTextField jTextFieldEquipo;
     private javax.swing.JTextField jTextFieldIdProducto;
+    private javax.swing.JTextField jTextFieldMarca;
     private javax.swing.JTextField jTextFieldNombreProducto;
     private javax.swing.JTextField jTextFieldPrecio;
     private javax.swing.JTextField jTextFieldTalla;

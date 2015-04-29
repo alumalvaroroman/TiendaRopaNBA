@@ -46,7 +46,7 @@ public class Ventas implements Serializable {
     private Ticket idTicket;
     @JoinColumn(name = "Id_Producto", referencedColumnName = "IdProducto")
     @ManyToOne
-    private Producto_1 idProducto;
+    private Producto idProducto;
 
     public Ventas() {
     }
@@ -79,11 +79,11 @@ public class Ventas implements Serializable {
         this.idTicket = idTicket;
     }
 
-    public Producto_1 getIdProducto() {
+    public Producto getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(Producto_1 idProducto) {
+    public void setIdProducto(Producto idProducto) {
         this.idProducto = idProducto;
     }
 

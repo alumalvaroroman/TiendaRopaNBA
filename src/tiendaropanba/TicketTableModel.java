@@ -25,7 +25,7 @@ public class TicketTableModel extends AbstractTableModel {
         LineaTicket ticket = listaTicket.getListaTickets().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return ticket.getId().getId();
+                return ticket.getId().getIdProducto();
             case 1:
                 return ticket.getProducto().getNombreProducto();
             case 2:

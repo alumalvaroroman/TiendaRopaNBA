@@ -1,5 +1,6 @@
 package tiendaropanba;
 
+import java.math.BigDecimal;
 import javax.swing.table.AbstractTableModel;
 
 
@@ -26,11 +27,11 @@ public class InventarioTableModel extends AbstractTableModel {
         Producto producto = listaProductos.getListaProductos().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return producto.getId();
+                return producto.getIdProducto();
             case 1:
                 return producto.getNombreProducto();
             case 2:
-                return producto.getEquipo();
+                return producto.getMarca();
             case 3:
                 return producto.getPrecio();
             default:
@@ -46,7 +47,7 @@ public class InventarioTableModel extends AbstractTableModel {
             case 1:
                 return "Nombre de producto";
             case 2:
-                return "Equipo";
+                return "Marca";
             case 3:
                 return "Precio";
             default:
@@ -69,16 +70,16 @@ public class InventarioTableModel extends AbstractTableModel {
         Producto producto = listaProductos.getListaProductos().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                producto.setId(Integer.valueOf((String)aValue));
+                producto.setIdProducto(Integer.valueOf((String)aValue));
                 break;
             case 1:
                 producto.setNombreProducto(String.valueOf(aValue));
                 break;
             case 2:
-                producto.setEquipo(String.valueOf(aValue));
+                producto.setMarca(String.valueOf(aValue));
                 break;
             case 3:
-                producto.setPrecio(Double.valueOf((String)aValue));
+                producto.setPrecio(BigDecimal.valueOf(Double.valueOf((String)aValue)));
                 break;
         }
     }   

@@ -1,16 +1,22 @@
 package tiendaropanba;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListaProductos {
-    private ArrayList<Producto> listaProductos = new ArrayList();
+    private List<Producto> listaProductos;
 
     public Producto getProducto(int index){
         return this.listaProductos.get(index);
     }   
     
-    public ArrayList<Producto> getListaProductos() {
+    public List<Producto> getListaProductos() {
         return listaProductos;
     }
+
+    public void setListaProductos(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
+    
+    
     
 }

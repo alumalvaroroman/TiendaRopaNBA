@@ -93,7 +93,7 @@
                                   <Component id="jTextFieldTalla" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
                                   <Component id="jTextFieldPrecio" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldEquipo" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldMarca" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextFieldNombreProducto" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -144,7 +144,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldEquipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldMarca" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -242,7 +242,7 @@
                 <Property name="text" type="java.lang.String" value="Color:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldEquipo">
+            <Component class="javax.swing.JTextField" name="jTextFieldMarca">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
@@ -262,7 +262,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Equipo:"/>
+                <Property name="text" type="java.lang.String" value="Marca:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldCantdDisponibles">

@@ -1,11 +1,11 @@
 package tiendaropanba;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListaTicket {
-    private ArrayList<LineaTicket> listaTickets = new ArrayList();
+    private List<LineaTicket> listaTickets;
 
-    public ArrayList<LineaTicket> getListaTickets() {
+    public List<LineaTicket> getListaTickets() {
         return listaTickets;
     }
 }
