@@ -27,6 +27,8 @@ public class Main extends javax.swing.JFrame {
     private TicketTableModel ticketTableModel;
     private static EntityManager entityManager;
     private Query consultaProductos;
+    
+    boolean modificado;
 
     /**
      * Creates new form Inventario
@@ -83,14 +85,17 @@ public class Main extends javax.swing.JFrame {
         
     }
     
-    public void insertProducto(){
-                
+    public void insertProducto(){     
         entityManager.getTransaction().begin();
         entityManager.persist(producto);
         entityManager.getTransaction().commit();
         
         listaProductos.getListaProductos().add(producto);  
     }
+    
+//    public void removeProducto(){
+//        
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -182,6 +187,11 @@ public class Main extends javax.swing.JFrame {
 
         jButtonBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/borrar.png"))); // NOI18N
         jButtonBorrar.setToolTipText("Borrar");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiendaropanba/iconos/editar.png"))); // NOI18N
         jButtonEditar.setToolTipText("Editar");
@@ -355,6 +365,8 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        modificado = false;
+        
         jTable1.setEnabled(false);
         jTextFieldNombreProducto.setEditable(true);
         jTextFieldMarca.setEditable(true);
@@ -373,6 +385,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        modificado = true;
+        
         jTable1.setEnabled(false);
         jTextFieldNombreProducto.setEditable(true);
         jTextFieldMarca.setEditable(true);
@@ -383,9 +397,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        //        Producto producto = listaProductos.getProducto(jTable1.getSelectedRow());
-
-        producto.setIdProducto(null);
+          
         producto.setNombreProducto(jTextFieldNombreProducto.getText());
         producto.setMarca(jTextFieldMarca.getText());
         producto.setTalla(jTextFieldTalla.getText());
@@ -404,9 +416,42 @@ public class Main extends javax.swing.JFrame {
         jTextFieldCantdDisponibles.setEditable(false);
         jTextAreaDescripcion.setEditable(false);
 
-        insertProducto();
-        inventarioTableModel.fireTableRowsInserted(listaProductos.getListaProductos().size()-1, listaProductos.getListaProductos().size()-1);
+        int indexSelectedRow = jTable1.getSelectedRow();
+        
+        if (!modificado) {
+            insertProducto();
+            inventarioTableModel.fireTableRowsInserted(listaProductos.getListaProductos().size()-1, listaProductos.getListaProductos().size()-1);
+        } else{
+            Producto producto = listaProductos.getListaProductos().get(indexSelectedRow);
+            producto.setNombreProducto(jTextFieldNombreProducto.getText());
+            producto.setMarca(jTextFieldMarca.getText());
+            producto.setTalla(jTextFieldTalla.getText());
+            producto.setColor(null);
+            producto.setPrecio(BigDecimal.valueOf(Double.valueOf(jTextFieldPrecio.getText())));
+            producto.setCantidadesDisponibles(Integer.valueOf(jTextFieldCantdDisponibles.getText()));
+            producto.setDescripcion(jTextAreaDescripcion.getText());
+            
+            entityManager.getTransaction().begin(); 
+            entityManager.merge(producto); 
+            entityManager.getTransaction().commit();
+        }   
+        
+        
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        int indexSelectedRow = jTable1.getSelectedRow();
+        
+        entityManager.getTransaction().begin();
+        entityManager.remove(listaProductos.getListaProductos().get(indexSelectedRow));
+        entityManager.getTransaction().commit();
+        
+        listaProductos.getListaProductos().remove(indexSelectedRow);
+        
+        
+        inventarioTableModel.fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+        
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     /**
      * @param args the command line arguments
