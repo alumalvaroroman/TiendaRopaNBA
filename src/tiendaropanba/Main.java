@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,9 +23,9 @@ public class Main extends javax.swing.JFrame {
 
     Producto producto = new Producto();
     ListaProductos listaProductos = new ListaProductos();
-    ListaTicket listaTicket = new ListaTicket();
+    ListaVentas listaVentas = new ListaVentas();
     private InventarioTableModel inventarioTableModel;
-    private TicketTableModel ticketTableModel;
+    private VentasTableModel ventaTableModel;
     private static EntityManager entityManager;
     private Query consultaProductos;
     
@@ -60,8 +61,8 @@ public class Main extends javax.swing.JFrame {
         jTable1.setModel(inventarioTableModel);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
         
-//        ticketTableModel = new TicketTableModel(listaTicket);
-//        jTable2.setModel(ticketTableModel);
+//        ventaTableModel = new VentasTableModel(listaVentas);
+//        jTable2.setModel(ventaTableModel);
 //        jTable2.getColumnModel().getColumn(3).setCellRenderer(new PrecioRenderer());
     }
       
@@ -74,6 +75,7 @@ public class Main extends javax.swing.JFrame {
             jTextFieldPrecio.setText("");
             jTextFieldCantdDisponibles.setText("");
             jTextAreaDescripcion.setText("");
+            jLabelImagen.setText("");
         } else {
             jTextFieldNombreProducto.setText(listaProductos.getListaProductos().get(indexSelectedRow).getNombreProducto());
             jTextFieldMarca.setText(listaProductos.getListaProductos().get(indexSelectedRow).getMarca());
@@ -348,7 +350,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(211, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Ticket", jPanel2);
+        jTabbedPane1.addTab("Venta", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -440,16 +442,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
-        int indexSelectedRow = jTable1.getSelectedRow();
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea borrar este producto?", "Atención", JOptionPane.OK_CANCEL_OPTION);
         
-        entityManager.getTransaction().begin();
-        entityManager.remove(listaProductos.getListaProductos().get(indexSelectedRow));
-        entityManager.getTransaction().commit();
+        if (JOptionPane.OK_OPTION == respuesta) {
+            int indexSelectedRow = jTable1.getSelectedRow();
         
-        listaProductos.getListaProductos().remove(indexSelectedRow);
+            entityManager.getTransaction().begin();
+            entityManager.remove(listaProductos.getListaProductos().get(indexSelectedRow));
+            entityManager.getTransaction().commit();
+
+            listaProductos.getListaProductos().remove(indexSelectedRow);
+            inventarioTableModel.fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+        }
         
-        
-        inventarioTableModel.fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
         
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 

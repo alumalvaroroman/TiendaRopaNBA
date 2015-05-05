@@ -1,37 +1,43 @@
 package tiendaropanba;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.table.AbstractTableModel;
 
 
-public class TicketTableModel extends AbstractTableModel {
-    private ListaTicket listaTicket;
+public class TicketTableModel extends AbstractTableModel{
+    private ListaTickets listaTicket;
 
-    public TicketTableModel(ListaTicket ticket) {
+    public TicketTableModel(ListaTickets ticket) {
         this.listaTicket = ticket;
     }
     
+    
     @Override
     public int getRowCount() {
-          return listaTicket.getListaTickets().size();
+          return listaTicket.getListaTicket().size();
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        LineaTicket ticket = listaTicket.getListaTickets().get(rowIndex);
+        Ticket ticket = listaTicket.getListaTicket().get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return ticket.getId().getIdProducto();
+                return ticket.getIdTicket();
             case 1:
-                return ticket.getProducto().getNombreProducto();
+                return ticket.getNombreEmpresa();
             case 2:
-                return ticket.getCantidad();
+                return ticket.getNombreVendedor();
             case 3:
-                return ticket.getPrecio().getPrecio();
+                return ticket.getFecha();
+            case 4:
+                return ticket.getHora();
             default:
                 return null;
         }
@@ -41,16 +47,18 @@ public class TicketTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch(column) {
             case 0:
-                return "Id";
+                return "Id Ticket";
             case 1:
-                return "Producto";
+                return "Nombre empresa";
             case 2:
-                return "Cantidad";
+                return "Nombre Vendedor";
             case 3:
-                return "Precio";
+                return "Fecha";
+            case 4:
+                return "Hora";
             default:
                 return null;
         }
     }  
-    
+   
 }
