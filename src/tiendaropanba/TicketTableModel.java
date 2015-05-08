@@ -16,7 +16,9 @@ public class TicketTableModel extends AbstractTableModel{
     
     @Override
     public int getRowCount() {
-          return listaTicket.getListaTicket().size();
+        if(listaTicket.getListaTicket() == null)
+            return 0;
+        return listaTicket.getListaTicket().size();
     }
 
     @Override

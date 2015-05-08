@@ -12,7 +12,9 @@ public class VentasTableModel extends AbstractTableModel {
     
     @Override
     public int getRowCount() {
-          return listaVentas.getListaVentas().size();
+        if(listaVentas.getListaVentas() == null)
+            return 0;
+        return listaVentas.getListaVentas().size();
     }
 
     @Override

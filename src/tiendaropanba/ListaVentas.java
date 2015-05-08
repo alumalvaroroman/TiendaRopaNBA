@@ -8,4 +8,6 @@ public class ListaVentas {
     public List<Ventas> getListaVentas() {
         return listaVentas;
     }
+    
+    
 }
